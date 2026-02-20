@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geometry Dash Clone</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <canvas id="gameCanvas"></canvas>
+    <div id="ui-overlay">
+        <div id="title-screen" class="ui-screen active">
+            <h1 class="game-title">GEOMETRY DASH</h1>
+            <div class="menu-buttons">
+                <button id="btn-play" class="menu-btn">PLAY</button>
+                <button id="btn-icons" class="menu-btn">ICONS</button>
+                <button id="btn-settings" class="menu-btn">SETTINGS</button>
+            </div>
+            <div class="stats-bar">
+                <span id="star-count">⭐ 0</span>
+                <span id="coin-count">🪙 0</span>
+                <span id="mana-count">💎 0</span>
+            </div>
+        </div>
+        <div id="level-select" class="ui-screen">
+            <h2>SELECT LEVEL</h2>
+            <div id="level-list" class="level-grid"></div>
+            <button id="btn-back-levels" class="menu-btn back-btn">BACK</button>
+        </div>
+        <div id="icon-select" class="ui-screen">
+            <h2>ICONS</h2>
+            <div id="icon-grid" class="icon-grid"></div>
+            <button id="btn-back-icons" class="menu-btn back-btn">BACK</button>
+        </div>
+        <div id="pause-menu" class="ui-screen">
+            <h2>PAUSED</h2>
+            <button id="btn-resume" class="menu-btn">RESUME</button>
+            <button id="btn-practice" class="menu-btn">PRACTICE MODE</button>
+            <button id="btn-restart" class="menu-btn">RESTART</button>
+            <button id="btn-quit" class="menu-btn">QUIT</button>
+        </div>
+        <div id="death-screen" class="ui-screen">
+            <h2 id="death-text">YOU CRASHED!</h2>
+            <p id="attempt-count">Attempt 1</p>
+            <button id="btn-retry" class="menu-btn">RETRY</button>
+        </div>
+        <div id="complete-screen" class="ui-screen">
+            <h2>LEVEL COMPLETE!</h2>
+            <div id="complete-stats"></div>
+            <button id="btn-next" class="menu-btn">CONTINUE</button>
+        </div>
+        <div id="hud" class="ui-hud">
+            <div id="progress-bar-container">
+                <div id="progress-bar-fill"></div>
+                <span id="progress-text">0%</span>
+            </div>
+            <span id="hud-attempts" class="hud-text"></span>
+        </div>
+        <div id="settings-screen" class="ui-screen">
+            <h2>SETTINGS</h2>
+            <div class="setting-row">
+                <label>Music Volume</label>
+                <input type="range" id="music-vol" min="0" max="100" value="80">
+            </div>
+            <div class="setting-row">
+                <label>SFX Volume</label>
+                <input type="range" id="sfx-vol" min="0" max="100" value="80">
+            </div>
+            <div class="setting-row">
+                <label>Show FPS</label>
+                <input type="checkbox" id="show-fps">
+            </div>
+            <button id="btn-back-settings" class="menu-btn back-btn">BACK</button>
+        </div>
+    </div>
+    <div id="fps-counter" style="display:none;"></div>
+
+    <!-- Utils -->
+    <script src="js/utils/Constants.js"></script>
+    <script src="js/utils/Easing.js"></script>
+    <script src="js/utils/MathUtils.js"></script>
+    <script src="js/utils/ColorUtils.js"></script>
+
+    <!-- Engine -->
+    <script src="js/engine/Input.js"></script>
+    <script src="js/engine/Audio.js"></script>
+    <script src="js/engine/CollisionSystem.js"></script>
+    <script src="js/engine/Physics.js"></script>
+    <script src="js/engine/Camera.js"></script>
+    <script src="js/engine/Renderer.js"></script>
+
+    <!-- Entities -->
+    <script src="js/entities/GameObject.js"></script>
+    <script src="js/entities/Hazard.js"></script>
+    <script src="js/entities/Player.js"></script>
+    <script src="js/entities/DualPlayer.js"></script>
+
+    <!-- Game Modes -->
+    <script src="js/modes/GameMode.js"></script>
+    <script src="js/modes/CubeMode.js"></script>
+    <script src="js/modes/ShipMode.js"></script>
+    <script src="js/modes/BallMode.js"></script>
+    <script src="js/modes/UFOMode.js"></script>
+    <script src="js/modes/WaveMode.js"></script>
+    <script src="js/modes/RobotMode.js"></script>
+    <script src="js/modes/SpiderMode.js"></script>
+    <script src="js/modes/SwingMode.js"></script>
+
+    <!-- Objects -->
+    <script src="js/objects/Orb.js"></script>
+    <script src="js/objects/Pad.js"></script>
+    <script src="js/objects/Portal.js"></script>
+    <script src="js/objects/Trigger.js"></script>
+
+    <!-- Triggers -->
+    <script src="js/triggers/TriggerSystem.js"></script>
+    <script src="js/triggers/MoveTrigger.js"></script>
+    <script src="js/triggers/RotateTrigger.js"></script>
+    <script src="js/triggers/AlphaTrigger.js"></script>
+    <script src="js/triggers/ColorTrigger.js"></script>
+    <script src="js/triggers/PulseTrigger.js"></script>
+    <script src="js/triggers/ToggleTrigger.js"></script>
+    <script src="js/triggers/SpawnTrigger.js"></script>
+    <script src="js/triggers/CameraTrigger.js"></script>
+    <script src="js/triggers/SongTrigger.js"></script>
+    <script src="js/triggers/RandomTrigger.js"></script>
+
+    <!-- Levels -->
+    <script src="js/levels/LevelValidator.js"></script>
+    <script src="js/levels/LevelParser.js"></script>
+    <script src="js/levels/LevelLoader.js"></script>
+
+    <!-- UI -->
+    <script src="js/ui/ProgressBar.js"></script>
+    <script src="js/ui/TitleScreen.js"></script>
+    <script src="js/ui/LevelSelect.js"></script>
+    <script src="js/ui/PauseMenu.js"></script>
+    <script src="js/ui/PracticeMode.js"></script>
+    <script src="js/ui/UIManager.js"></script>
+
+    <!-- Progression -->
+    <script src="js/progression/SaveSystem.js"></script>
+    <script src="js/progression/UnlockSystem.js"></script>
+    <script src="js/progression/ProgressionManager.js"></script>
+
+    <!-- Game & Main -->
+    <script src="js/engine/Game.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
