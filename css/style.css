@@ -1,0 +1,337 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #000;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+#gameCanvas {
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+#ui-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.ui-screen {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+    background: rgba(0, 0, 20, 0.92);
+    color: #fff;
+    animation: fadeIn 0.3s ease;
+}
+
+.ui-screen.active {
+    display: flex;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.game-title {
+    font-size: 72px;
+    font-weight: 900;
+    letter-spacing: 8px;
+    background: linear-gradient(135deg, #00ffff, #ff00ff, #ffff00, #00ff00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    margin-bottom: 50px;
+    animation: titlePulse 2s ease-in-out infinite;
+}
+
+@keyframes titlePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.menu-btn {
+    background: linear-gradient(135deg, #1a1a3e, #2d2d6e);
+    border: 2px solid #4444aa;
+    color: #fff;
+    padding: 15px 60px;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    min-width: 250px;
+    text-align: center;
+    pointer-events: auto;
+}
+
+.menu-btn:hover {
+    background: linear-gradient(135deg, #2d2d6e, #4444aa);
+    border-color: #6666dd;
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(68, 68, 170, 0.5);
+}
+
+.menu-btn:active {
+    transform: scale(0.98);
+}
+
+.back-btn {
+    margin-top: 30px;
+    padding: 10px 40px;
+    font-size: 16px;
+    min-width: 150px;
+}
+
+.stats-bar {
+    position: absolute;
+    bottom: 30px;
+    display: flex;
+    gap: 30px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.level-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
+    max-width: 800px;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.level-card {
+    background: linear-gradient(135deg, #1a1a3e, #2d2d6e);
+    border: 2px solid #4444aa;
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+    pointer-events: auto;
+    min-width: 200px;
+}
+
+.level-card:hover {
+    border-color: #6666dd;
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(68, 68, 170, 0.5);
+}
+
+.level-card .level-name {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.level-card .level-difficulty {
+    font-size: 14px;
+    color: #aaa;
+    margin-bottom: 5px;
+}
+
+.level-card .level-progress {
+    font-size: 12px;
+    color: #88ff88;
+}
+
+.level-card .difficulty-icon {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.icon-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 10px;
+    padding: 20px;
+    max-width: 600px;
+}
+
+.icon-item {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #444;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    transition: all 0.2s;
+    pointer-events: auto;
+    background: #1a1a3e;
+}
+
+.icon-item:hover {
+    border-color: #6666dd;
+    transform: scale(1.1);
+}
+
+.icon-item.selected {
+    border-color: #00ffff;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+}
+
+.icon-item.locked {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.ui-hud {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px 20px;
+    pointer-events: none;
+    z-index: 15;
+}
+
+.ui-hud.active {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#progress-bar-container {
+    width: 300px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+}
+
+#progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #00ff00, #00ffaa);
+    border-radius: 4px;
+    width: 0%;
+    transition: width 0.1s linear;
+}
+
+#progress-text {
+    position: absolute;
+    right: -45px;
+    top: -5px;
+    font-size: 14px;
+    color: #fff;
+    font-weight: 600;
+}
+
+.hud-text {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.setting-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 350px;
+    margin: 15px 0;
+    font-size: 18px;
+}
+
+.setting-row input[type="range"] {
+    width: 180px;
+    accent-color: #4444aa;
+}
+
+.setting-row input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+    accent-color: #4444aa;
+}
+
+#fps-counter {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    color: #0f0;
+    font-size: 12px;
+    font-family: monospace;
+    z-index: 20;
+    pointer-events: none;
+}
+
+#death-screen h2 {
+    font-size: 48px;
+    color: #ff4444;
+    margin-bottom: 10px;
+}
+
+#complete-screen h2 {
+    font-size: 48px;
+    color: #44ff44;
+    margin-bottom: 20px;
+}
+
+#complete-stats {
+    font-size: 20px;
+    margin-bottom: 20px;
+    line-height: 1.8;
+}
+
+/* Practice mode checkpoint indicator */
+.practice-indicator {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #ffff00;
+    font-size: 16px;
+    font-weight: 600;
+    pointer-events: none;
+    z-index: 15;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: #111;
+}
+::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 3px;
+}
