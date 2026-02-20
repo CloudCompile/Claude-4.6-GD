@@ -122,8 +122,11 @@ class LevelValidator {
         
         // Ensure all objects have required fields
         for (const obj of sanitized.objects) {
-            if (!obj.width) obj.width = GD.BLOCK_SIZE;
-            if (!obj.height) obj.height = GD.BLOCK_SIZE;
+            // Portals have their own size defaults in the Portal class
+            if (obj.type !== 'portal') {
+                if (!obj.width) obj.width = GD.BLOCK_SIZE;
+                if (!obj.height) obj.height = GD.BLOCK_SIZE;
+            }
             if (obj.active === undefined) obj.active = true;
             if (obj.visible === undefined) obj.visible = true;
         }
