@@ -1,7 +1,7 @@
 const GD = {
     // Physics constants - calibrated to match GD behavior
     BLOCK_SIZE: 30,           // Base unit size in pixels
-    GRAVITY: 2600,            // Pixels/s² downward gravity
+    GRAVITY: 4500,            // Pixels/s² downward gravity — calibrated to GD: 3.6-block jump at 311 px/s (real GD 1x speed)
     JUMP_IMPULSE: -780,       // Pixels/s upward impulse for cube jump
     TERMINAL_VELOCITY: 1200,  // Max vertical speed
     
