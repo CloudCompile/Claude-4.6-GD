@@ -94,7 +94,6 @@ class LevelParser {
             case 'spike':
             case 'hazard':
                 parsed.hazards.push(obj);
-                parsed.objects.push(obj);
                 break;
             case 'orb':
                 parsed.orbs.push(obj);

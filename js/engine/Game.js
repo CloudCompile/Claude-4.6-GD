@@ -158,7 +158,8 @@ class Game {
         
         // All objects have y positions relative to ground (y=0 means at ground level)
         // Negative y means above ground
-        const allObjects = [
+        // Use a Set to avoid double-transforming objects that appear in multiple arrays
+        const allObjects = new Set([
             ...this.levelObjects,
             ...this.hazards,
             ...this.orbs,
@@ -167,11 +168,16 @@ class Game {
             ...this.triggers,
             ...this.coins,
             ...this.decorations
-        ];
+        ]);
         
         for (const obj of allObjects) {
-            obj.baseY = groundY + obj.y;
-            obj.y = obj.baseY;
+            // Store the original level-data Y for resets
+            if (obj._originalY === undefined) {
+                obj._originalY = obj.y;
+            }
+            const worldY = groundY + obj._originalY;
+            obj.baseY = worldY;
+            obj.y = worldY;
         }
     }
     
@@ -198,12 +204,23 @@ class Game {
         for (const obj of this.portals) obj.resetState();
         for (const obj of this.triggers) obj.resetState();
         for (const obj of this.coins) obj.collected = false;
-        for (const obj of [...this.levelObjects, ...this.hazards]) {
-            obj.resetTriggerState();
-        }
         
-        // Re-position objects
-        this._positionObjects();
+        // Reset trigger offsets without re-positioning
+        const allObjects = [
+            ...this.levelObjects, ...this.hazards,
+            ...this.orbs, ...this.pads, ...this.portals,
+            ...this.triggers, ...this.coins, ...this.decorations
+        ];
+        for (const obj of allObjects) {
+            obj.triggerOffsetX = 0;
+            obj.triggerOffsetY = 0;
+            obj.triggerRotation = 0;
+            obj.triggerAlpha = 0;
+            obj.x = obj.baseX;
+            obj.y = obj.baseY;
+            obj.rotation = obj.baseRotation;
+            obj.alpha = obj.baseAlpha;
+        }
     }
     
     restart() {
