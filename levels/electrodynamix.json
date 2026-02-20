@@ -1,0 +1,38 @@
+{
+  "metadata": {
+    "name": "Electrodynamix",
+    "difficulty": "INSANE",
+    "bpm": 128,
+    "stars": 6,
+    "coins": 3,
+    "description": "A fast-paced level featuring gravity flips, wave mode, and intense obstacles."
+  },
+  "music": {
+    "bpm": 128,
+    "offset": 0
+  },
+  "speed": 2,
+  "bgColor": "#2e0a2e",
+  "groundColor": "#5a1a5a",
+  "objects": [
+    {"type": "portal", "portalType": "speed_double", "x": 90, "y": -60},
+    {"type": "spike", "x": 240, "y": -30, "width": 30, "height": 30, "direction": "up"},
+    {"type": "spike", "x": 270, "y": -30, "width": 30, "height": 30, "direction": "up"},
+    {"type": "spike", "x": 360, "y": -30, "width": 30, "height": 30, "direction": "up"},
+    {"type": "spike", "x": 390, "y": -30, "width": 30, "height": 30, "direction": "up"},
+    {"type": "spike", "x": 420, "y": -30, "width": 30, "height": 30, "direction": "up"},
+    {"type": "portal", "portalType": "gravity_flip", "x": 900, "y": -60},
+    {"type": "portal", "portalType": "gravity_normal", "x": 1260, "y": -60},
+    {"type": "portal", "portalType": "mode_wave", "x": 1800, "y": -60},
+    {"type": "portal", "portalType": "mode_cube", "x": 2700, "y": -60},
+    {"type": "portal", "portalType": "mode_ball", "x": 3300, "y": -60},
+    {"type": "portal", "portalType": "mode_cube", "x": 4200, "y": -60}
+  ],
+  "triggers": [],
+  "portals": [],
+  "orbs": [
+    {"type": "orb", "orbType": "RED", "x": 2640, "y": -90, "width": 30, "height": 30},
+    {"type": "orb", "orbType": "BLUE", "x": 2880, "y": -60, "width": 30, "height": 30}
+  ],
+  "pads": []
+}

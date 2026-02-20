@@ -1,0 +1,36 @@
+{
+  "metadata": {
+    "name": "Back On Track",
+    "difficulty": "EASY",
+    "bpm": 130,
+    "stars": 2,
+    "coins": 3,
+    "description": "Master multiple game modes including the ship and UFO."
+  },
+  "music": {
+    "bpm": 130,
+    "offset": 0
+  },
+  "speed": 1,
+  "bgColor": "#0a2e0a",
+  "groundColor": "#1a5a1a",
+  "objects": [
+    {"type": "spike", "x": 240, "y": -30, "width": 30, "height": 30, "direction": "up"},
+    {"type": "spike", "x": 390, "y": -30, "width": 30, "height": 30, "direction": "up"},
+    {"type": "block", "x": 510, "y": -30, "width": 30, "height": 30, "color": "#2a5a2a", "solid": true},
+    {"type": "block", "x": 540, "y": -30, "width": 30, "height": 30, "color": "#2a5a2a", "solid": true},
+    {"type": "portal", "portalType": "mode_ship", "x": 2250, "y": -60},
+    {"type": "portal", "portalType": "mode_cube", "x": 3600, "y": -60},
+    {"type": "portal", "portalType": "mode_ufo", "x": 5400, "y": -60},
+    {"type": "portal", "portalType": "mode_cube", "x": 6600, "y": -60}
+  ],
+  "triggers": [],
+  "portals": [],
+  "orbs": [
+    {"type": "orb", "orbType": "YELLOW", "x": 1020, "y": -90, "width": 30, "height": 30},
+    {"type": "orb", "orbType": "PINK", "x": 1650, "y": -60, "width": 30, "height": 30}
+  ],
+  "pads": [
+    {"type": "pad", "padType": "YELLOW", "x": 780, "y": -12, "width": 30, "height": 12}
+  ]
+}

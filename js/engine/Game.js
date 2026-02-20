@@ -400,6 +400,12 @@ class Game {
             );
             if (result === 'jump') {
                 this.audio.playSFX('jump');
+            } else if (result === 'teleport') {
+                // Spider mode teleport
+                this.currentMode.performTeleport(
+                    this.player, this.physics, GD.GROUND_Y, GD.CEILING_Y
+                );
+                this.audio.playSFX('gravityFlip');
             }
         }
         
@@ -410,9 +416,6 @@ class Game {
                 GD.GROUND_Y, GD.CEILING_Y
             );
         }
-        
-        // Update horizontal position
-        this.player.x += this.player.velocityX * dt;
         
         // Dash handling
         if (this.player.dashing) {

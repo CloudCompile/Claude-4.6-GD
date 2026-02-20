@@ -4,28 +4,25 @@ class RobotMode extends GameMode {
     }
     
     handleInput(player, input, physics, dt) {
-        if (input.pressed && player.onGround && !player.robotJumping) {
-            // Start charging jump
-            player.robotHoldTime += dt;
-            player.robotHoldTime = Math.min(player.robotHoldTime, GD.ROBOT_CHARGE_TIME);
-        }
-        
-        if (input.justReleased && player.onGround && player.robotHoldTime > 0) {
-            // Release jump with variable height
-            physics.applyRobotJump(player, player.robotHoldTime);
-            player.robotJumping = true;
-            player.robotHoldTime = 0;
-            return 'jump';
-        }
-        
-        if (input.justPressed && player.onGround) {
-            // Minimum jump on tap
-            player.robotHoldTime = 0;
-        }
-        
-        // Also allow tap jump (instant press+release)
-        if (input.justPressed && player.onGround && !player.robotJumping) {
-            player.robotHoldTime = 0.01; // Minimal charge
+        if (player.onGround && !player.robotJumping) {
+            if (input.justPressed) {
+                // Start charging jump
+                player.robotHoldTime = 0;
+            }
+            
+            if (input.pressed) {
+                // Continue charging
+                player.robotHoldTime += dt;
+                player.robotHoldTime = Math.min(player.robotHoldTime, GD.ROBOT_CHARGE_TIME);
+            }
+            
+            if (input.justReleased && player.robotHoldTime > 0) {
+                // Release jump with variable height
+                physics.applyRobotJump(player, player.robotHoldTime);
+                player.robotJumping = true;
+                player.robotHoldTime = 0;
+                return 'jump';
+            }
         }
         
         return null;
