@@ -88,11 +88,7 @@ class UIManager {
         for (const id in this.screens) {
             const el = this.screens[id];
             if (el) {
-                if (id === 'hud') {
-                    el.classList.remove('active');
-                } else {
-                    el.classList.remove('active');
-                }
+                el.classList.remove('active');
             }
         }
         
