@@ -3,16 +3,7 @@ class LevelValidator {
         const errors = [];
         
         if (!levelData) {
-            errors.push('Level
-
-You
-Continue
-Assistant
-
-
-## js/levels/LevelValidator.js (continued)
-
- data is null or undefined');
+            errors.push('Level data is null or undefined');
             return { valid: false, errors };
         }
         

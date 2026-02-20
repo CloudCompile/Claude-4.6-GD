@@ -2,7 +2,7 @@ class Game {
     constructor() {
         this.canvas = document.getElementById('gameCanvas');
         this.renderer = new Renderer(this.canvas);
-        this.input = new InputManager();
+        this.input = new Input();
         this.audio = new AudioManager();
         this.physics = new Physics();
         this.camera = new Camera(this.canvas.width, this.canvas.height);
@@ -364,10 +364,13 @@ class Game {
     update(dt) {
         this.time += dt;
         
+        // Update input state first
+        this.input.update(dt);
+        
         const inputState = {
-            justPressed: this.input.justPressed(),
-            isHeld: this.input.isHeld(),
-            justReleased: this.input.justReleased()
+            justPressed: this.input.justPressed,
+            isHeld: this.input.pressed,
+            justReleased: this.input.justReleased
         };
         
         // Update player mode
@@ -461,9 +464,6 @@ class Game {
         if (this.dualPlayer) {
             this._updateDualPlayer(dt, inputState);
         }
-        
-        // Consume input
-        this.input.update();
     }
     
     _checkObjectCollisions() {
@@ -556,7 +556,7 @@ class Game {
             if (!orb.active) continue;
             if (Math.abs(orb.x - this.player.x) > GD.BLOCK_SIZE * 3) continue;
             
-            if (orb.checkActivation(this.player, inputState.justPressed || inputState.isHeld)) {
+            if (orb.canActivate(this.player)) {
                 this.player.canActivateOrb = true;
                 this.player.currentOrb = orb;
                 
@@ -699,7 +699,7 @@ class Game {
     
     _updateDualPlayer(dt, inputState) {
         if (!this.dualPlayer) return;
-        this.dualPlayer.update(this.player, dt);
+        this.dualPlayer.update(dt);
     }
     
     render() {
